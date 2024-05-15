@@ -69,7 +69,8 @@ wordsRouter.patch(
     'videos',
     'relativeWords',
     'contributor',
-    'topic'
+    'topic',
+    'rating'
   ]),
   wrapRequestHandler(updateWordController)
 )

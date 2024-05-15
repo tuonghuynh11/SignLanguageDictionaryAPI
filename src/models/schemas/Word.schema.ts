@@ -13,6 +13,7 @@ interface WordType {
   topic: ObjectId
   created_at?: Date
   updated_at?: Date
+  rating?: number
 }
 
 export default class Word {
@@ -28,6 +29,7 @@ export default class Word {
   topic: ObjectId
   created_at?: Date
   updated_at?: Date
+  rating?: number
 
   constructor(word: WordType) {
     const date = new Date()
@@ -43,5 +45,6 @@ export default class Word {
     this.topic = word.topic || ''
     this.created_at = word.created_at || date
     this.updated_at = word.updated_at || date
+    this.rating = word.rating || 0
   }
 }

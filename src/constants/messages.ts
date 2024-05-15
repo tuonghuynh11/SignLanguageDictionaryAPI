@@ -101,7 +101,8 @@ export const WORD_MESSAGES = {
   WORD_ID_INVALID: 'Word ID is invalid',
   WORD_IS_NOT_EXISTED: 'Word is not existed',
   DELETE_WORD_SUCCESSFULLY: 'Delete word successfully',
-  DELETE_WORD_FAILED: 'Delete word failed'
+  DELETE_WORD_FAILED: 'Delete word failed',
+  RATING_IS_ALWAYS_GREATER_THAN_OR_EQUAL_TO_ZERO: 'Rating is always greater than zero'
 } as const
 export const TOPICS_MESSAGES = {
   GET_TOPICS_SUCCESS: 'Get topics successfully',

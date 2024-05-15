@@ -295,6 +295,19 @@ export const updateWordValidator = validate(
             return true
           }
         }
+      },
+      rating: {
+        isNumeric: true,
+        optional: true,
+        custom: {
+          options: (value, { req }) => {
+            const num = Number(value)
+            if (num < 0) {
+              throw new Error(WORD_MESSAGES.RATING_IS_ALWAYS_GREATER_THAN_OR_EQUAL_TO_ZERO)
+            }
+            return true
+          }
+        }
       }
     },
     ['body']

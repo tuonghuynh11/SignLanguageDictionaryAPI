@@ -22,4 +22,5 @@ export interface UpdateWordRequestBody {
   relativeWords?: Word[]
   contributor?: string
   topic?: string
+  rating?: number
 }

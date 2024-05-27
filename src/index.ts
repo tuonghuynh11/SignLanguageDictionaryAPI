@@ -2,6 +2,7 @@ import express from 'express'
 import usersRouter from './routes/users.routes'
 import databaseService from './services/database.services'
 import { envConfig } from './constants/config'
+import cors, { CorsOptions } from 'cors'
 import { defaultErrorHandler } from './middlewares/error.middlewares'
 import wordsRouter from './routes/words.routes'
 import topicsRouter from './routes/topics.routes'
@@ -11,11 +12,19 @@ import learnedWordsRouter from './routes/learnedWords.routes'
 import learnedPackageRouter from './routes/learnedPackage.routes'
 import feedbacksRouter from './routes/feedbacks.routes'
 import statisticsRouter from './routes/statistic.routes'
+import helmet from 'helmet'
 const app = express()
 const PORT = envConfig.port
 databaseService.connect().then(() => {
   databaseService.createIndexes()
 })
+//Use Helmet
+app.use(helmet())
+const corsOptions: CorsOptions = {
+  origin: '*'
+}
+app.use(cors(corsOptions))
+
 app.use(express.json())
 
 app.get('/', (req, res) => {

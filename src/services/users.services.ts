@@ -11,6 +11,7 @@ import { ErrorWithStatus } from '~/models/Errors'
 import axios from 'axios'
 import { USERS_MESSAGES } from '~/constants/messages'
 import HTTP_STATUS from '~/constants/httpStatus'
+import { sendForgotPasswordEmail, sendVerifyEmail } from '~/utils/mails'
 
 class UserService {
   private signAccessToken({ user_id, role, verify }: { user_id: string; role: UserRole; verify: UserVerifyStatus }) {
@@ -129,6 +130,7 @@ class UserService {
     )
 
     console.log('email_verify_token', email_verify_token)
+    sendVerifyEmail({ email: payload.email, email_verify_token: email_verify_token })
     return { access_token, refresh_token }
   }
   async checkEmailExists(email: string) {
@@ -357,7 +359,7 @@ class UserService {
     }
   }
 
-  async forgotPassword({ user_id, verify }: { user_id: string; verify: UserVerifyStatus }) {
+  async forgotPassword({ user_id, verify, email }: { user_id: string; verify: UserVerifyStatus; email: string }) {
     const forgot_password_token = await this.signForgotPasswordToken({ user_id, verify })
     await databaseService.users.updateOne(
       {
@@ -374,7 +376,7 @@ class UserService {
     )
 
     //Gửi email kèm đường link đến email người dùng: http://twitter.com/forgot-password?token=token
-
+    sendForgotPasswordEmail({ email: email, forgot_password_token: forgot_password_token })
     console.log('forgot password token:', forgot_password_token)
     return {
       message: USERS_MESSAGES.CHECK_EMAIL_TO_RESET_PASSWORD

@@ -115,6 +115,8 @@ class UserService {
     const result = await databaseService.users.insertOne(
       new User({
         ...payload,
+        email_verify_token: email_verify_token,
+        _id: user_id,
         role: UserRole.User,
         password: hashPassword(payload.password)
       })
@@ -338,7 +340,7 @@ class UserService {
     return { access_token, refresh_token }
   }
 
-  async resendVerifyEmail(user_id: string) {
+  async resendVerifyEmail(user_id: string, email: string) {
     const email_verify_token = await this.signEmailVerifyToken({ user_id, verify: UserVerifyStatus.Unverified })
     console.log('Resend verify email: ', user_id)
 
@@ -354,6 +356,7 @@ class UserService {
         }
       }
     )
+    sendVerifyEmail({ email: email, email_verify_token: email_verify_token })
     return {
       message: USERS_MESSAGES.RESEND_VERIFY_EMAIL_SUCCESS
     }

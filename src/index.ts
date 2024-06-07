@@ -13,11 +13,14 @@ import learnedPackageRouter from './routes/learnedPackage.routes'
 import feedbacksRouter from './routes/feedbacks.routes'
 import statisticsRouter from './routes/statistic.routes'
 import helmet from 'helmet'
+import mediaRouter from './routes/media.routes'
+import { initFolder } from './utils/file'
 const app = express()
 const PORT = envConfig.port
 databaseService.connect().then(() => {
   databaseService.createIndexes()
 })
+initFolder()
 //Use Helmet
 app.use(helmet())
 const corsOptions: CorsOptions = {
@@ -40,6 +43,7 @@ app.use('/api/learned-words', learnedWordsRouter)
 app.use('/api/learned-packages', learnedPackageRouter)
 app.use('/api/feedbacks', feedbacksRouter)
 app.use('/api/statistics', statisticsRouter)
+app.use('/api/medias', mediaRouter)
 
 //Error Handler must be place in the end of handlers
 app.use(defaultErrorHandler)

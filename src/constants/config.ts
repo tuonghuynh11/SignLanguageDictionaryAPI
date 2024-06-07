@@ -24,8 +24,10 @@ export const envConfig = {
   refreshTokenExpiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN as string,
   accessTokenExpiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN as string,
   emailVerifyTokenExpiresIn: process.env.EMAIL_VERIFY_TOKEN_EXPIRES_IN as string,
-  forgotPasswordTokenExpiresIn: process.env.FORGOT_PASSWORD_TOKEN_EXPIRES_IN as string
-
+  forgotPasswordTokenExpiresIn: process.env.FORGOT_PASSWORD_TOKEN_EXPIRES_IN as string,
+  cloud_name: process.env.CLOUD_NAME as string,
+  api_key: process.env.API_KEY as string,
+  api_secret: process.env.API_SECRET as string
   // awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
   // awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
   // awsRegion: process.env.AWS_REGION as string,

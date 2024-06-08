@@ -4,10 +4,5 @@ import { accessTokenValidator, adminRoleValidator, verifiedUSerValidator } from 
 import { wrapRequestHandler } from '~/utils/handles'
 const mediaRouter = Router()
 
-mediaRouter.post(
-  '/word/upload-video',
-  accessTokenValidator,
-  adminRoleValidator,
-  wrapRequestHandler(uploadVideoController)
-)
+mediaRouter.post('/word/upload-video', accessTokenValidator, wrapRequestHandler(uploadVideoController))
 export default mediaRouter

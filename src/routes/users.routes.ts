@@ -3,6 +3,7 @@ import {
   banUserController,
   changePasswordController,
   forgotPasswordController,
+  getAllUserController,
   getMeController,
   loginController,
   logoutController,
@@ -18,6 +19,7 @@ import {
 import { filterMiddleware } from '~/middlewares/common.middlewares'
 import {
   accessTokenValidator,
+  adminRoleValidator,
   changePasswordValidator,
   emailVerifyTokenValidator,
   forgotPasswordValidator,
@@ -32,10 +34,25 @@ import {
   verifiedUSerValidator,
   verifyForgotPasswordTokenValidator
 } from '~/middlewares/users.middlewares'
+import { paginationNavigator } from '~/middlewares/words.middlewares'
 import { UpdateMeReqBody } from '~/models/requests/User.requests'
 import { wrapRequestHandler } from '~/utils/handles'
 
 const usersRouter = Router()
+
+/**
+ * Description: Get ALL User
+ * Path: /
+ * Method: GET
+ * **/
+usersRouter.get(
+  '/',
+  accessTokenValidator,
+  adminRoleValidator,
+  paginationNavigator,
+  wrapRequestHandler(getAllUserController)
+)
+
 /**
  * Description: Login to an account by username
  * Path: /login-username

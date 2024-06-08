@@ -1,4 +1,5 @@
 export const USERS_MESSAGES = {
+  GET_ALL_USERS_SUCCESS: 'GET_ALL_USERS_SUCCESS',
   ACCOUNT_IS_ONLINE: 'Account is online. Please log out and try again.',
   VALIDATION_ERROR: 'Validation error',
   EMAIL_ALREADY_EXISTS: 'Email already exists',

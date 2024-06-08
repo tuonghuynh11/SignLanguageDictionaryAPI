@@ -507,6 +507,68 @@ class UserService {
     )
     return user
   }
+  async getAllUsers({ page, limit, isBan }: { page: number; limit: number; isBan?: number }) {
+    if (isBan === 0 || isBan === 1) {
+      const [users, totalUsers] = await Promise.all([
+        databaseService.users
+          .aggregate([
+            {
+              $project: {
+                password: 0
+              }
+            },
+            {
+              $match: {
+                status: isBan ? UserStatus.Ban : UserStatus.Normal
+              }
+            },
+            {
+              $skip: (page - 1) * limit
+            },
+            {
+              $limit: limit
+            }
+          ])
+          .toArray(),
+        databaseService.users
+          .aggregate([
+            {
+              $match: {
+                status: isBan ? UserStatus.Ban : UserStatus.Normal
+              }
+            }
+          ])
+          .toArray()
+      ])
+      return {
+        users: users,
+        total: totalUsers.length
+      }
+    } else {
+      const [users, totalUsers] = await Promise.all([
+        databaseService.users
+          .aggregate([
+            {
+              $project: {
+                password: 0
+              }
+            },
+            {
+              $skip: (page - 1) * limit
+            },
+            {
+              $limit: limit
+            }
+          ])
+          .toArray(),
+        databaseService.users.find().toArray()
+      ])
+      return {
+        users: users,
+        total: totalUsers.length
+      }
+    }
+  }
 }
 
 const userService = new UserService()

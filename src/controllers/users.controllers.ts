@@ -201,3 +201,20 @@ export const unBanUserController = async (req: Request<BanUserReqParams>, res: R
     result: user
   })
 }
+
+export const getAllUserController = async (req: Request<ParamsDictionary, any, any>, res: Response) => {
+  const limit = Number(req.query.limit)
+  const page = Number(req.query.page)
+  const isBan = Number(req.query?.isBan)
+  const { users, total } = await userService.getAllUsers({ page, limit, isBan })
+  return res.json({
+    message: USERS_MESSAGES.GET_ALL_USERS_SUCCESS,
+    result: {
+      users: users,
+      page: page,
+      limit: limit,
+      total_items: total,
+      total_pages: Math.ceil(total / limit)
+    }
+  })
+}

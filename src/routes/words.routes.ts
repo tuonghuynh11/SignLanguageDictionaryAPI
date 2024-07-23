@@ -76,7 +76,7 @@ wordsRouter.patch(
 )
 
 /**
- * Description: Update a Word
+ * Description: Delete a Word
  * Path: /update/:word_id
  * Method: DELETE
  * Header:{Authorization:Bearer <access_token>}

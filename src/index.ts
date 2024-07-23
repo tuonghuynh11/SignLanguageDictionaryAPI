@@ -15,8 +15,14 @@ import statisticsRouter from './routes/statistic.routes'
 import helmet from 'helmet'
 import mediaRouter from './routes/media.routes'
 import { initFolder } from './utils/file'
+import YAML from 'yaml'
+import fs from 'fs'
+import path from 'path'
+import swaggerUi from 'swagger-ui-express'
 const app = express()
 const PORT = envConfig.port
+const file = fs.readFileSync(path.resolve('slda-swagger.yaml'), 'utf8')
+const swaggerDocument = YAML.parse(file)
 databaseService.connect().then(() => {
   databaseService.createIndexes()
 })
@@ -33,7 +39,7 @@ app.use(express.json())
 app.get('/', (req, res) => {
   res.send('Hello!')
 })
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/api/users', usersRouter)
 app.use('/api/words', wordsRouter)
 app.use('/api/topics', topicsRouter)
